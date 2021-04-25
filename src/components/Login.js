@@ -24,8 +24,9 @@ const LoginButton = styled.a`
 const endpoint = "https://accounts.spotify.com/authorize"
 const clientID = "fc93d7f76128405392aed38e5205da57"
 const redirectUri="http://localhost:3000/"
-const scopes=["user-read-recently-played","user-read-playback-state","user-top-read","user-modify-playback-state"]
-const loginUrl = `${endpoint}?client_id=${clientID}&response_type=token&redirect_uri=${redirectUri}&scope=${scopes.join("%20")}&show_dialog=true`
+const scopes=["streaming","user-read-email","user-read-private","user-library-read","user-library-modify","user-read-playback-state","user-modify-playback-state","user-read-recently-played","user-top-read","playlist-modify-private","playlist-modify-public","user-read-currently-playing"]
+const loginUrl = `${endpoint}?client_id=${clientID}&response_type=code&redirect_uri=${redirectUri}&scope=${scopes.join("%20")}&show_dialog=true`
+
 const Login = () => {
     return (
         <LoginContainer>

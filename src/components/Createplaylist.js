@@ -1,6 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
-//estilos
+
+// estilos
 const H1 = styled.div`
   display:flex;
   align-items:center;
@@ -15,15 +16,17 @@ const H1 = styled.div`
   h2{
       margin-left:3px;
   }
-`
+  `
 
-const Sidebaroption = ({title, Icon}) => {
+const CreatePlaylist = ({title, Icon,onClick}) => {
     return (
         <H1>
             <Icon/>
-             <h2>{title}</h2> 
+            <h2
+            onClick={onClick}
+            >{title}</h2>
         </H1>
     )
 }
 
-export default Sidebaroption
+export default CreatePlaylist

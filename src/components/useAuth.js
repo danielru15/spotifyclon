@@ -1,7 +1,8 @@
+
 import { useState, useEffect } from "react"
 import axios from "axios"
 
-const useAuth =(code) => {
+export default function useAuth(code) {
   const [accessToken, setAccessToken] = useState()
   const [refreshToken, setRefreshToken] = useState()
   const [expiresIn, setExpiresIn] = useState()
@@ -43,4 +44,3 @@ const useAuth =(code) => {
 
   return accessToken
 }
-export default useAuth

@@ -1,9 +1,12 @@
-import React from 'react'
+import React,{useState,useEffect, Fragment} from 'react'
 import styled from 'styled-components'
-
+import SpotifyWebApi from 'spotify-web-api-node'
 //icons
 import SearchIcon from '@material-ui/icons/Search';
 import {Avatar} from '@material-ui/core';
+
+
+
 
 //estilos
 const SpotifyHeader = styled.div`
@@ -32,30 +35,46 @@ background-color:black;
 width:200px;
 border-radius:30px;
 padding:5px;
-& h4 {
+& h3 {
     color:white;
     margin-left:15px;
 }
 `
+// spotify api
+const spotifyApi = new SpotifyWebApi({
+    clientId: "fc93d7f76128405392aed38e5205da57"
+})
 
-const Header = () => {
-  
-      
+const Header = ({Buscar,onChange,AccesToken }) => {
+    const [user, setuser] = useState('')
+    useEffect(() => {
+        if(!AccesToken) return
+        spotifyApi.setAccessToken(AccesToken)
+        spotifyApi.getMe()
+        .then(data =>{
+            setuser(data.body.display_name)
+        }) 
+    }, [AccesToken]) 
+    
 
     return (
-        <SpotifyHeader>
+        <Fragment>
+            <SpotifyHeader>
             <HeaderLeft>
                 <SearchIcon/>
-                <input type="text" 
+                <input type="search" 
                 placeholder="Artistas, canciones o podcast"
-                
+                value={Buscar}
+                onChange={onChange}
                 />
             </HeaderLeft>
             <HeaderRight>
                 <Avatar/>
-                <h4>daniel</h4>
+                <h3>{user}</h3>
             </HeaderRight>
         </SpotifyHeader>
+        </Fragment>
+        
     )
 }
 

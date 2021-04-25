@@ -1,29 +1,29 @@
 import React from 'react'
 import styled from 'styled-components'
-//estilos
-const H1 = styled.div`
+
+const Playlists = styled.div`
   display:flex;
   align-items:center;
   color:gray;
-  height:40px;
   cursor:pointer;
-  margin:10px 2rem;
+  margin:7px 2rem;
   transition:300ms ease-in;
   &:hover {
       color:white;
   }
-  h2{
+  h3{
+      font-size:1.3em;
       margin-left:3px;
   }
 `
 
-const Sidebaroption = ({title, Icon}) => {
+const Playlist = ({dato}) => {
+
     return (
-        <H1>
-            <Icon/>
-             <h2>{title}</h2> 
-        </H1>
+        <Playlists>
+            <h3>{dato.nombre}</h3>
+        </Playlists>
     )
 }
 
-export default Sidebaroption
+export default Playlist
