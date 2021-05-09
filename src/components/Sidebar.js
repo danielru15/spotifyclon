@@ -34,11 +34,13 @@ const spotifyApi = new SpotifyWebApi({
     clientId: "fc93d7f76128405392aed38e5205da57"
 })
 
-const Sidebar = ({AccesToken}) => {
+const Sidebar = ({AccesToken,MostrarPlaylist}) => {
     // Estados
     const [crear, setcrear] = useState('')
     const [Resultplaylist, setResultplaylist] = useState([])
-   
+   function MandarPlaylist(dato) {
+    MostrarPlaylist(dato) 
+   }
     useEffect(() => {
         if(!AccesToken) return
         spotifyApi.setAccessToken(AccesToken)
@@ -64,12 +66,14 @@ const Sidebar = ({AccesToken}) => {
                 return {
                     nombre:dato.name,
                     uri:dato.uri,
-                    description:dato.description
+                    description:dato.description,
+                    canciones:dato.tracks,
+                    propietario:dato.owner.display_name,
+                    imagen:dato.images[0]?.url
                 }
             }))
         })
     }, [AccesToken,crear])
-    console.log(Resultplaylist)
     return (
         <SidebarContainer>
             <img src="https://1000logos.net/wp-content/uploads/2017/08/Spotify-symbol.jpg" alt="logo" className="logo"/>
@@ -88,6 +92,7 @@ const Sidebar = ({AccesToken}) => {
                     <Playlist
                         dato={dato}
                         key={dato.uri}
+                        MandarPlaylist={MandarPlaylist}
                     />
                 ))  
             }

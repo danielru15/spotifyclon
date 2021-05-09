@@ -4,6 +4,7 @@ import Header from './Header'
 import SpotifyWebApi from 'spotify-web-api-node'
 import ResultadoCanciones from './ResultadoCanciones'
 import Main from './Main'
+import Recentlisten from './Recentlisten'
 
 
 //estilos
@@ -53,12 +54,12 @@ const spotifyApi = new SpotifyWebApi({
     clientId: "fc93d7f76128405392aed38e5205da57"
 })
 
-const Body = ({AccesToken,Play }) => {
+const Body = ({AccesToken,Play}) => {
     const [Buscar, setBuscar] = useState('')
     const [ResultadosBuscar, setResultadosBuscar] = useState([])
     const [Inicio, setInicio] = useState([])
-    
-
+    const [escureciente, setescureciente] = useState([])
+    //  manda la cancion al reproductor
     function cancionSonando(cancion) {
         Play(cancion)
     }
@@ -120,16 +121,32 @@ const Body = ({AccesToken,Play }) => {
         }) 
     }, [AccesToken])
     
-    
+    // escuchadas recientemente
+    useEffect(() => {
+        let arr = []
+        if(!AccesToken) return// Get Current User's Recently Played Tracks
+        spotifyApi.getMyRecentlyPlayedTracks({
+          limit : 4
+        }).then(function(data) {
+            // Output items
+            let datas = data.body.items
+            datas.forEach(item => {
+                if(!arr.includes(item)){
+                    arr.push(item.track);
+                }
+                //console.log(arr)
+            });
+            setescureciente(arr)
+          });
+    }, [AccesToken])
+   console.log(escureciente)
     return (
-        
         <BodyContainer>
             <Header 
                      AccesToken={AccesToken } 
                     value={Buscar} 
                     onChange={(e) => setBuscar(e.target.value)} 
             />
-            
             { 
                Buscar ? 
                <>
@@ -155,23 +172,30 @@ const Body = ({AccesToken,Play }) => {
                                 cancionSonando={cancionSonando}
                             />
                         ))
+                        
                     }
                        </tbody>
                  </Table> 
                </>
                : <>
+                    <BUSCAR>Escuchados recientemente</BUSCAR>
+                    <BodyMain>
+                        {
+                        
+                        
+                        }
+                    </BodyMain>
                     <BUSCAR>Categorias Colombia.</BUSCAR>
                     <BodyMain>
                         {
                             Inicio.map(datos => (
                                 <Main 
-                                datos={datos}
-                                key={datos.uri}
+                                   datos={datos}
+                                   key={datos.uri}
                                 />
                             ))
                         }
                     </BodyMain>
-
                </>
             }
         </BodyContainer>

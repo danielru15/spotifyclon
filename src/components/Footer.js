@@ -13,15 +13,14 @@ const FooterContainer = styled.div`
     
 `
 
-const Footer = ({AccesToken,playuri}) => {
+const Footer = ({AccesToken,playuri,playlista}) => {
   
     const [play, setPlay] = useState(false)
 
-    useEffect(() => setPlay(true), [playuri])
+    useEffect(() => setPlay(true), [playuri,playlista])
     if (!AccesToken) return null
     return (
         
-
        <FooterContainer>
             <SpotifyPlayer
              styles={{
@@ -42,7 +41,7 @@ const Footer = ({AccesToken,playuri}) => {
                 if (!state.isPlaying) setPlay(false)
               }}
               play={play}
-            uris={playuri ? [playuri] :['spotify:playlist:4OS7H7fbrQSXZAnMHFm5Hj']}
+              uris={playuri ? [playuri] : playlista ? [playlista] : []}
             />
        </FooterContainer>
       

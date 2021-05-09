@@ -11,17 +11,21 @@ const Playlists = styled.div`
   &:hover {
       color:white;
   }
-  h3{
+  p{
       font-size:1.3em;
       margin-left:3px;
   }
 `
 
-const Playlist = ({dato}) => {
-
+const Playlist = ({dato,MandarPlaylist}) => {
+    function EMandarPlaylist() {
+        MandarPlaylist(dato)
+    }
     return (
-        <Playlists>
-            <h3>{dato.nombre}</h3>
+        <Playlists
+        onClick={EMandarPlaylist}
+        >
+            <p>{dato.nombre}</p>
         </Playlists>
     )
 }
